@@ -1,0 +1,2359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Summit Vancouver 2026</title>
+  <meta name="description" content="Session summaries, highlights, and takeaways from Web Summit Vancouver." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Conference Insights" />
+  <meta property="og:title" content="Web Summit Vancouver 2026" />
+  <meta property="og:description" content="Session summaries, highlights, and takeaways from Web Summit Vancouver." />
+  <meta property="og:image" content="og-preview.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1024" />
+  <meta property="og:image:height" content="540" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Web Summit Vancouver 2026" />
+  <meta name="twitter:description" content="Session summaries, highlights, and takeaways from Web Summit Vancouver." />
+  <meta name="twitter:image" content="og-preview.png" />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Mono:wght@400;700&display=swap");
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; height: 100%; }
+    #root { min-height: 100%; }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.26.10/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef } = React;
+
+const DAYS = [
+  { id: "may11", label: "May 11", subtitle: "Day 1", dayType: "evening" },
+  { id: "may12", label: "May 12", subtitle: "Day 2", dayType: "full" },
+  { id: "may13", label: "May 13", subtitle: "Day 3", dayType: "full" },
+  { id: "may14", label: "May 14", subtitle: "Day 4", dayType: "full" },
+];
+
+/** Modal omits the italic event `note` (bottom line) for these schedule days. */
+const MODAL_HIDE_NOTE_DAY_IDS = new Set(["may12", "may13", "may14"]);
+
+const TRACK_COLORS = {
+  "Centre Stage": { bg: "#1a1a2e", text: "#e0e0ff", accent: "#7c6fff" },
+  "Creative Summit": { bg: "#2d1b3d", text: "#f0e0ff", accent: "#c77dff" },
+  "AI Summit": { bg: "#1b2d3d", text: "#e0f0ff", accent: "#5cb8ff" },
+  "Corporate Innovation": { bg: "#1b3d2d", text: "#e0ffe8", accent: "#5cffa0" },
+  "Marketing Summit": { bg: "#3d2d1b", text: "#fff0e0", accent: "#ffaa5c" },
+  "Growth Summit": { bg: "#1b3d3d", text: "#e0ffff", accent: "#5cffdd" },
+  Masterclasses: { bg: "#2d2520", text: "#fff0e8", accent: "#e8a87c" },
+  "Broad Topics": { bg: "#1a1a2e", text: "#e8e8ff", accent: "#ffffff" },
+};
+
+const TRACK_LABELS = {
+  "AI Summit": "AI Innovation",
+  "Creative Summit": "Design",
+  "Growth Summit": "Strategy",
+  "Marketing Summit": "Marketing",
+  "Corporate Innovation": "Operations",
+  "Corporate Innovation Summit": "Operations",
+  "Broad Topics": "Cross-Category",
+};
+
+const FOCUS_TRACKS = [
+  { name: "AI Summit", accent: "#5cb8ff", desc: "AI is changing product development, enterprise tools, ethical decision-making, and the future of work" },
+  { name: "Creative Summit", accent: "#c77dff", desc: "AI is shaping UX, product design, creative tools, branding, and the way teams design better customer experiences" },
+  {
+    name: "Growth Summit",
+    accent: TRACK_COLORS["Growth Summit"].accent,
+    desc: "Leaders can guide teams through AI-driven change, build resilient organizations, and scale without losing clarity or culture",
+  },
+  { name: "Marketing Summit", accent: "#ffaa5c", desc: "AI is changing brand building, customer engagement, creative campaigns, personalization, and the way companies connect with audiences" },
+  { name: "Corporate Innovation", accent: "#5cffa0", desc: "AI can improve internal workflows, product strategy, digital transformation, support processes, and business scalability" },
+  {
+    name: "Broad Topics",
+    accent: TRACK_COLORS["Broad Topics"].accent,
+    desc: "Broader themes across the conference, including technology, society, culture, trust, and what AI means for the future of business",
+  },
+];
+
+const SESSIONS = {
+  may11: [
+    {
+      time: "6:20 – 6:50 PM",
+      title: "Can copyright survive tokenmaxxing?",
+      track: "Broad Topics",
+      speakers: ["Sigrid Jin (Sionic AI)", "Madison Mills (Axios)"],
+      relevance: "high",
+      note: "How AI-driven replication and extreme token use test copyright, open source, and creative norms",
+      hideNoteInModal: true,
+      modalImage: "./assets/session-copyright-tokenmaxxing.png",
+      modalBio:
+        "Sigrid Jin: AI engineer/content creator known for experimenting heavily with AI coding agents and agentic workflows",
+      modalQuote: "Today's software is tomorrow's software prompt",
+      modalSmallQuote: true,
+      modalKeyPoints: [
+        "Treat AI as a coworker, not just a tool",
+        "Humans become agent managers",
+        "Make use of multiple agents with different roles and perspectives",
+        "Cost awareness around tokens and tools",
+        "Legal and ethical caution around code and ownership",
+        "prediction: open source code will become more accessible to individuals, IP stands to be in a gray area",
+      ],
+      isHighlight: true,
+      tags: ["AI", "Copyright"],
+      modalSummaryPdf: "./assets/summaries/copyright-tokenmaxxing.pdf",
+    },
+    {
+      time: "6:50 – 7:20 PM",
+      title: "The sovereign AI blueprint",
+      track: "Broad Topics",
+      speakers: ["Evan Solomon (Minister of AI & Digital Innovation)", "Joelle Pineau (Chief AI Officer, Cohere)"],
+      relevance: "high",
+      note: "Sovereign AI, trust, and Canada's path to responsible adoption at national and enterprise scale",
+      modalImage: "./assets/session-sovereign-ai-blueprint.png",
+      modalQuote: "Innovation moves at the speed of technology, but citizens move at the speed of trust.",
+      modalQuoteAfterImage: true,
+      modalGoals: [
+        "Control over where data lives and how it is protected",
+        "Flexibility in how AI is deployed: cloud, on-prem, or secure local environments",
+        "Greater focus on trust, privacy, and responsible AI adoption",
+        "Build AI products using local infrastructure (Telus AI Factory) and support (Cohere)",
+        "AI readiness - empower people to implement AI with control over software stack",
+      ],
+      modalPartners: [
+        {
+          name: "Cohere",
+          text: "Leading Canadian AI company - provides enterprise businesses and governments with secure, high-performance tools that avoid the data privacy risks associated with consumer-facing platforms like ChatGPT",
+        },
+        {
+          name: "Telus",
+          text: "AI Factory with 3 new data centers - Canadian sovereign AI infrastructure (basically high-performance GPU data centres where companies, researchers, and public institutions can train, fine-tune, and run AI models while keeping data in Canada)",
+        },
+      ],
+      isHighlight: true,
+      accentOverride: "#ffffff",
+      tags: ["AI", "Sovereignty"],
+      modalSummaryPdf: "./assets/summaries/sovereign-ai-blueprint.pdf",
+    },
+  ],
+  may12: [
+    {
+      time: "10:30 – 10:50 AM",
+      title: "From AI assistants to AI coworkers: what's next?",
+      track: "Corporate Innovation",
+      speakers: [
+        "Spence Green (CEO, Lilt)",
+        "Andrew Filev (CEO & Founder, Zencoder)",
+        "Jeff Desjardins (Editor-in-Chief, Visual Capitalist)",
+      ],
+      relevance: "high",
+      note: "The rise of autonomous AI agents joining teams and managing project lifecycles",
+      modalImage: "./assets/session-ai-assistants-coworkers.png",
+      modalQuote: "We need to move past the copy-paste monkey approach to using AI models",
+      modalQuoteAfterImage: true,
+      modalKeyPoints: [
+        "AI agents as coworkers, not replacements",
+        "Humans shifting from execution to orchestration",
+        "Clear responsibilities, onboarding, and supervision",
+        "Verification for important AI outputs",
+        "Feedback loops to improve agent performance",
+        "Strong context so agents understand workflows",
+        "Human oversight for judgment-heavy decisions",
+        "Process redesign, not just tool adoption",
+        "Start small, fix bottlenecks, then scale",
+      ],
+      isHighlight: true,
+      tags: ["AI", "Future of Work"],
+      modalSummaryPdf: "./assets/summaries/from-ai-assistants-to-coworkers.pdf",
+    },
+    {
+      time: "10:40 – 11:00 AM",
+      title: "Context is the new competitive advantage",
+      track: "Corporate Innovation",
+      speakers: ["Alex Rinke (Co-CEO & Co-founder, Celonis)"],
+      relevance: "high",
+      note: "Why process intelligence is the missing layer for enterprise AI that delivers real outcomes",
+      modalImage: "./assets/session-context-competitive-advantage.png",
+      modalSubheading: "Celonis: global leader in Process Intelligence and Process Mining software",
+      modalSubheadingSmall: true,
+      modalKeyPoints: [
+        "Operational context as the foundation for enterprise AI",
+        "A living digital twin of how the company works",
+        "Connected processes, tasks, policies, systems, and data",
+        "Less confusion across fragmented tools and workflows",
+        "Smarter AI decisions based on real business context",
+        "More accurate, reliable, cost-effective, and safer AI",
+        "Future AI built on context, governance, and better decision-making",
+      ],
+      isHighlight: true,
+      tags: ["AI", "Enterprise"],
+      modalSummaryPdf: "./assets/summaries/context-competitive-advantage.pdf",
+    },
+    {
+      time: "11:10 – 11:30 AM",
+      title: "AI promised productivity. It delivered workslop.",
+      track: "Corporate Innovation",
+      speakers: [
+        "Kate Niederhoffer (Chief Scientist, BetterUp)",
+        "Jeff Hancock (Founder, Stanford University Social Media Lab)",
+        "Madison Mills (Senior AI Reporter, Axios)",
+      ],
+      relevance: "high",
+      note: "Why 95% of organizations see no measurable ROI on AI — and what they're investing in wrong",
+      modalImage: "./assets/session-ai-workslop.png",
+      modalQuote: "Have the pilot mindset, not the passenger mindset",
+      modalQuoteAfterImage: true,
+      modalKeyPoints: [
+        "Work slop: polished AI output with low substance",
+        "Bad AI work creates extra work for others",
+        "Low-quality AI content is already common",
+        "Each incident can cost hours to fix",
+        "Main causes: weak guidance, poor training, and unclear expectations",
+        "Reward outcomes, not AI usage for show",
+        "Pilot mindset over passenger mindset",
+        "AI should improve thinking, not replace judgment",
+        "Invest in people, coaching, and workflows",
+        "AI only works well with trust, feedback, and human oversight",
+      ],
+      isHighlight: true,
+      tags: ["AI", "Productivity"],
+      modalSummaryPdf: "./assets/summaries/ai-workslop.pdf",
+    },
+    {
+      time: "11:20 – 11:50 AM",
+      title: "How to win in AI",
+      track: "AI Summit",
+      speakers: [
+        "Courtney Fukuda (Co-founder, Metropolis)",
+        "Max Lytvyn (Co-founder, Board Member, Superhuman)",
+        "Kristen Saloomey (US correspondent, Al Jazeera Media)",
+      ],
+      relevance: "high",
+      note: "Leaders who took different paths to AI advantage share what actually creates durable systems",
+      modalImage: "./assets/session-how-to-win-ai.png",
+      modalCoreTakeaway:
+        "The companies that do well with AI will not be the ones that just add AI because it is popular. They will be the ones that use AI to solve real problems, understand their customers, protect trust, and build systems that actually work.",
+      modalKeyPoints: [
+        "AI as part of the core product",
+        "Real customer problems",
+        "Clear customer needs first",
+        "Useful and reliable AI",
+        "Company data for better personalization",
+        "Feedback loops for improvement",
+        "Control over customer experience",
+        "Privacy, trust, and safety checks",
+        "Long-term value over AI hype",
+      ],
+      isHighlight: true,
+      tags: ["AI", "Strategy"],
+      modalSummaryPdf: "./assets/summaries/how-to-win-in-ai.pdf",
+    },
+    {
+      time: "11:40 – 12:00 PM",
+      title: "Agentic AI & commerce: The discovery shift marketers can’t miss",
+      track: "Marketing Summit",
+      speakers: ["Michael Komasinski (CEO, Criteo)"],
+      relevance: "high",
+      note: "Consumers stay in the loop as AI sharpens discovery, evaluation, and choice—and what brands must do to compete",
+      modalImage: "./assets/session-agentic-ai-commerce.png",
+      modalCoreTakeaway:
+        "Consumers stay in the loop as AI sharpens discovery, evaluation, and choice—and what brands must do to compete",
+      modalKeyPoints: [
+        "AI-led product discovery",
+        "Personalized recommendations",
+        "Company-owned assistants with better context",
+        "Faster path from interest to action",
+        "Relevant upsell and cross-sell",
+        "Connected data and governance",
+        "More integrated customer experiences",
+      ],
+      isHighlight: true,
+      tags: ["Keynote", "Commerce"],
+      modalSummaryPdf: "./assets/summaries/agentic-ai-commerce.pdf",
+    },
+    {
+      time: "12:00 – 12:25 PM",
+      title: "Brand building in the age of AI",
+      track: "Marketing Summit",
+      speakers: [
+        "Jasmine Tookes (Co-founder, Brunel)",
+        "Jenny Wang (Founder, ALTA)",
+        "Tyler Orton (Editor-in-Chief, Business in Vancouver)",
+      ],
+      relevance: "high",
+      note:
+        "Brands stay distinctive by sharpening personality, protecting creative DNA, and using AI to amplify the human side of the brand",
+      modalImage: "./assets/session-brand-building-ai-age.png",
+      modalCoreTakeaway:
+        "AI makes marketing stronger when it feels personal, useful, and trustworthy.",
+      modalKeyPoints: [
+        "Personalized content",
+        "Stronger customer connection",
+        "Better product visuals",
+        "More shareable experiences",
+        "Smarter recommendations",
+        "Human input for trust",
+        "Feedback loops for improvement",
+      ],
+      isHighlight: true,
+      tags: ["Super fireside", "Brand"],
+      modalSummaryPdf: "./assets/summaries/brand-building-ai.pdf",
+    },
+    {
+      time: "12:10 – 12:30 PM",
+      title: "The future of remote work and international talent",
+      track: "Broad Topics",
+      speakers: [
+        "Ilya Brotzky (Co-Founder & CEO, VanHack)",
+        "Skerdi Sino (CMO, Native Teams)",
+        "Minda Zetlin (Contributing Editor, Inc.)",
+      ],
+      relevance: "medium",
+      note:
+        "A look at why cross-border hiring and international employment are becoming central to how modern teams work and grow",
+      modalImage: "./assets/session-future-remote-work.png",
+      modalQuote: "The cheaper something becomes, the consumption goes up",
+      modalSmallQuote: true,
+      modalKeyPoints: [
+        "Remote work for high-skill roles",
+        "More selective hiring",
+        "AI-driven productivity expectations",
+        "Clear async communication and documentation",
+        "Hybrid touchpoints for culture and trust",
+        "New roles in AI orchestration and validation",
+        "Remote flexibility + AI productivity + human connection",
+      ],
+      tags: ["Panel", "Future of Work"],
+      modalSummaryPdf: "./assets/summaries/future-remote-work.pdf",
+    },
+    {
+      time: "12:50 – 1:10 PM",
+      title: "Building the agentic operating system",
+      track: "AI Summit",
+      speakers: [
+        "Matt Lyteson (CIO, IBM)",
+        "Zachary Karabell (Founder, The Progress Network)",
+      ],
+      relevance: "high",
+      note: "IBM on architecting enterprise frameworks where AI agents solve problems while humans focus on strategy",
+      modalImage: "./assets/session-building-agentic-os.png",
+      modalCoreTakeaway:
+        "AI should make business communications easier to manage, safer to operate, and faster to troubleshoot",
+      modalKeyPoints: [
+        "AI for real workflows, not hype",
+        "Smaller, specialized models",
+        "Faster work, lower cost, fewer errors",
+        "Agents for complex workflow automation",
+        "Internal testing before customer rollout",
+        "AI for routine work, humans for judgment",
+      ],
+      isHighlight: true,
+      tags: ["AI", "Agentic"],
+      modalSummaryPdf: "./assets/summaries/building-agentic-os.pdf",
+    },
+  ],
+  may13: [
+    {
+      time: "10:10 – 10:15 AM",
+      title: "When AI sounds right but is wrong: The hidden crisis of context",
+      track: "Growth Summit",
+      speakers: ["Tallat Shafaat (CEO & Founder, Vectara)"],
+      relevance: "medium",
+      note:
+        "What enterprise-grade context engineering actually requires",
+      modalKeyPoints: [
+        "Give AI the right information to work with",
+        "AI mistakes caused by missing or unclear context",
+        "Make sure AI answers are based on real company data",
+        "Know what information the AI can access and what actions it is allowed to take",
+        "Help AI remember past conversations or tasks",
+        "Pull the right documents and facts when needed",
+        "Set permissions based on the user or role",
+        "Use checks to catch risky or wrong AI answers",
+        "Send uncertain cases to a human",
+        "Keep AI updated as company information changes",
+        "Reduce mistakes, even if they cannot be fully removed",
+        "Build trust by making AI more accurate, controlled, and reliable",
+      ],
+      modalBottomImageBeforeKeyPoints: true,
+      modalBottomImage: "./assets/session-hidden-crisis-context-bottom.png",
+      tags: ["AI", "Enterprise"],
+      modalSummaryPdf: "./assets/summaries/hidden-crisis-context.pdf",
+    },
+    {
+      time: "10:35 – 11:00 AM",
+      title: "Consolidating the modern tech stack with AI",
+      track: "AI Summit",
+      speakers: [
+        "Avery Pennarun (Co-founder & CEO, Tailscale)",
+        "David Shim (Co-founder & CEO, Read AI)",
+        "Wen Sang (Co-founder, Genspark.ai)",
+        "John Koetsier (Forbes columnist, podcaster, Forbes)",
+      ],
+      relevance: "high",
+      note:
+        "How fewer, smarter AI-driven systems can unify workflows and simplify decision-making",
+      modalImage: "./assets/session-consolidating-tech-stack-ai.png",
+      modalQuote: "AI is this universal translator - it can translate between any software",
+      modalQuoteAfterImage: true,
+      modalKeyPoints: [
+        "AI is the translation layer across tools",
+        "Smooth human-centered workflows over software-heavy processes",
+        "Agents as new users of software and APIs",
+        "Less focus on tool mastery, more focus on desired outcomes",
+        "Routine work delegated to AI",
+        "Measurable value from cross-system automation",
+      ],
+      tags: ["AI", "Enterprise"],
+      modalSummaryPdf: "./assets/summaries/consolidating-tech-stack-ai.pdf",
+    },
+    {
+      time: "10:40 – 10:45 AM",
+      title: "Safety first: Vibe coding at enterprise scale",
+      track: "Growth Summit",
+      speakers: ["Ronak Gandhi (Co-founder at Structify)"],
+      relevance: "high",
+      note:
+        "How fast “vibe coding” productivity squares with enterprise safety—what scales, what breaks, and how to keep velocity without losing control",
+      modalImage: "./assets/session-vibe-coding-enterprise-scale.png",
+      modalQuote: "Isolate your staging and production environment for agents, not just for people",
+      modalQuoteAfterImage: true,
+      modalKeyPoints: [
+        "AI-assisted coding",
+        "Fast prototyping with clear safety limits",
+        "Sandboxed agent environments",
+        "Strict separation between staging and production",
+        "Least-privilege access for AI agents",
+        "No production credentials inside agent workflows",
+        "Active monitoring",
+      ],
+      tags: ["AI", "Engineering"],
+      modalSummaryPdf: "./assets/summaries/safety-first-vibe-coding.pdf",
+    },
+    {
+      time: "10:40 – 10:45 AM",
+      title: "The human-AI flywheel: Why your best people are your best AI strategy",
+      track: "Growth Summit",
+      speakers: ["Sebastiao Zaragoza (Co-Founder & CCO, GetVocal AI)"],
+      relevance: "high",
+      note:
+        "Teams that combine human judgment with AI execution are outperforming pure automation on quality, speed, and cost",
+      modalImage: "./assets/session-human-ai-flywheel.png",
+      modalCoreTakeaway:
+        "Conversational Agents goal: orchestrate conversations from the beginning to the end",
+      modalKeyPoints: [
+        "Human-in-the-loop AI",
+        "AI handling routine conversations",
+        "Human validation for difficult or uncertain cases",
+        "Approved answers feeding future AI responses",
+        "Continuous learning from real customer interactions",
+        "Traceability and auditability for every response",
+        "Stress testing before production",
+        "Intent-based conversations instead of rigid menus",
+        "Safe escalation to human support",
+        "Lower hallucination risk through validated knowledge",
+        "Reduced handling time and support costs",
+      ],
+      isHighlight: true,
+      tags: ["Keynote", "Future of Work"],
+      modalSummaryPdf: "./assets/summaries/human-ai-flywheel.pdf",
+    },
+    {
+      time: "11:10 – 11:30 AM",
+      title: "The brand matrix: Navigating AI, reinvention and category disruption",
+      track: "Creative Summit",
+      speakers: [
+        "Rene Thomas (Partner & Chief Creative Officer, Takt)",
+        "Lindsay Smith (Founder & CEO, Takt)",
+      ],
+      relevance: "high",
+      note:
+        "The Brand Matrix helps companies keep their brand clear, consistent, and adaptable as AI and competition reshape the market",
+      modalImage: "./assets/session-brand-matrix-takt.png",
+      modalCoreTakeaway:
+        "AI should not just make the product look smarter. It should support a clearer, more consistent, and more trustworthy experience across the entire customer journey.",
+      modalKeyPoints: [
+        "AI should reflect the brand promise through helpful, reliable, and easy-to-understand interactions",
+        "Design should make AI feel clear and controlled, not confusing or unpredictable",
+        "AI can improve consistency across product flows, support, onboarding, and customer communication",
+        "Trust matters most, so users need clear guidance, transparency, and safe fallback options",
+        "AI should simplify complex workflows without hiding important decisions or risks",
+        "The best AI experiences connect product, design, support, and operations into one smoother system",
+      ],
+      isHighlight: true,
+      tags: ["Keynote", "Creative Summit"],
+      modalSummaryPdf: "./assets/summaries/brand-matrix.pdf",
+    },
+    {
+      time: "11:30 – 11:50 AM",
+      title: "Rethinking platforms for the creator era",
+      track: "Creative Summit",
+      speakers: [
+        "Eric Wittman (CEO, VSCO)",
+        "Michael Tchao (Content Creator, @michaeltchao)",
+      ],
+      relevance: "high",
+      note:
+        "How platforms could become genuine champions of creative work",
+      modalImage: "./assets/session-rethinking-platforms-creator-era.png",
+      modalQuote: "Tools should be the starting point, but it shouldn't be the ending.",
+      modalQuoteAfterImage: true,
+      modalKeyPoints: [
+        "AI as workflow support, not creative replacement",
+        "Automation for repetitive creator tasks",
+        "Protection of authenticity and original creative voice",
+        "Better discovery between creators",
+        "Community features that reduce creator isolation and support feedback",
+        "Tools that speed up publishing",
+        "AI used to reduce burnout and extend creator careers",
+      ],
+      isHighlight: true,
+      tags: ["Creative", "Platforms"],
+      modalSummaryPdf: "./assets/summaries/rethinking-platforms-creator-era.pdf",
+    },
+    {
+      time: "12:10 – 12:30 PM",
+      title: "Designing for trust in the age of AI",
+      track: "Creative Summit",
+      speakers: [
+        "Sara Vienna (Chief Design Officer, Metalab)",
+        "Myles Palmer (Director, Design, Metalab)",
+      ],
+      relevance: "high",
+      note:
+        "\u201cTrust\u201d is an overused UX word yet never more fragile\u2014amid AI, misinformation, and convincing fakes\u2014and how designers can earn real loyalty",
+      modalImage: "./assets/session-designing-trust-ai.png",
+      modalQuote: "As creators, we're encouraged to make something, to feed it to AI, to tweak it, to bring it back and tweak it again.",
+      modalQuoteAfterImage: true,
+      modalKeyPoints: [
+        "Trust built through transparency - proof of humanity = AI outputs are safe, reviewed, or verified",
+        "Show value before asking for access, sign-up, or payment",
+        "Safe spaces for users to test, explore, and offer feedback",
+        "Clear reassurance when users may feel uncertain or at risk",
+        "Visibility into how AI decisions, outputs, or recommendations are made",
+        "Design with more courage, intention, and human judgment instead of defaulting to average AI-generated sameness",
+      ],
+      isHighlight: true,
+      tags: ["UX", "AI", "Trust"],
+      modalSummaryPdf: "./assets/summaries/designing-for-trust-ai.pdf",
+    },
+  ],
+  may14: [
+    {
+      time: "10:45 – 11:10 AM",
+      title: "Stop speculating, start simulating",
+      track: "Broad Topics",
+      speakers: [
+        "Cameron Fink (Co-founder & CEO, Aaru)",
+        "Ben Bergman (Senior Correspondent, Business Insider)",
+      ],
+      relevance: "high",
+      note:
+        "Simulation instead of leaning on biased, outdated research",
+      modalImage: "./assets/session-stop-speculating-simulating.png",
+      modalCoreTakeaway:
+        "AI can help companies move from guessing what people might do to simulating likely real-world decisions using actual behavioral data.",
+      modalKeyPoints: [
+        "Use real behavior, not just surveys",
+        "Predict what people may buy",
+        "Test marketing ideas before spending big",
+        "Find the strongest ideas faster",
+        "Still use humans for final judgment",
+        "Use different data sources to avoid AI blind spots",
+      ],
+      isHighlight: true,
+      accentOverride: "#ffffff",
+      tags: ["Strategy", "Research"],
+      modalSummaryPdf: "./assets/summaries/stop-speculating-simulating.pdf",
+    },
+  ],
+};
+
+const PRIORITY_TRACKS = [
+  {
+    name: "Creative Summit",
+    why: "Your #1 track. Headlined by Adobe, Figma, Canva, Picsart, Spotify, Louis Vuitton. Covers UX/UI, design tools, AI in creativity, branding.",
+    companies: ["Adobe", "Figma", "Canva", "Picsart", "Spotify", "Louis Vuitton", "Fender", "YouTube"],
+  },
+  {
+    name: "AI Summit",
+    why: "Essential for understanding how AI is reshaping product design, development workflows, and creative tools.",
+    companies: ["Cohere", "Sionic AI", "Glean"],
+  },
+  {
+    name: "Corporate Innovation Summit",
+    why: "Product development, scaling tech, enterprise innovation — relevant to your B2B SaaS work at Sangoma.",
+    companies: ["KPMG", "Canadian Chamber of Commerce"],
+  },
+  {
+    name: "Marketing Summit",
+    why: "Brand development, data-driven marketing, CMO perspectives on product positioning.",
+    companies: ["ARM", "Roblox", "Aston Martin F1", "Cadillac F1"],
+  },
+  {
+    name: "Growth Summit",
+    why: "Leadership, resilience, and scaling — org design and culture as AI changes how teams grow and operate.",
+    companies: ["IBM", "Box"],
+  },
+  {
+    name: "Broad Topics",
+    why: "Cross-track keynotes and panels — society, culture, strategy, and macro trends that sit above any single summit lane.",
+    companies: [],
+  },
+];
+
+const HIGHLIGHT_THEMES = [
+  {
+    title: "Context makes AI useful",
+    track: "AI Summit",
+    summary:
+      "AI needs the right customer, product, account, workflow, and business context to give helpful answers or take the right action",
+  },
+  {
+    title: "Employees as AI agents managers",
+    track: "Growth Summit",
+    summary:
+      "Humans should guide, review, and improve AI agent work instead of doing every task manually",
+  },
+  {
+    title: "Trust is part of the product experience",
+    track: "Broad Topics",
+    summary:
+      "Good AI usage needs clear permissions, privacy controls, safe fallbacks, and transparent language so customers feel confident using it",
+  },
+  {
+    title: "Market value comes from practical outcomes",
+    track: "Marketing Summit",
+    summary:
+      "AI features should be tied to clear benefits: faster support, easier onboarding, fewer errors, better customer experience, stronger retention, or lower operational effort",
+  },
+  {
+    title: "AI as enhancement, not replacement",
+    track: "AI Summit",
+    summary:
+      "Role-specific AI agents should help employees refine their work and deliver better results, not replace the work that gives their role value",
+  },
+  {
+    title: "Feedback loops should be built into the product",
+    track: "AI Summit",
+    summary:
+      "Customers should be able to provide feedback to refine AI outputs so the product improves over time and becomes more aligned with real needs",
+  },
+  {
+    title: "Human control should stay visible",
+    track: "AI Summit",
+    summary:
+      "Customers need to know when AI is acting, what it is doing, and when they need to escalate to a person",
+  },
+  {
+    title: "Adoption depends on training and clear expectations",
+    track: "Growth Summit",
+    summary:
+      "Employees and customers need guidance, examples, and simple workflows; without that, AI can create confusion or extra cleanup work",
+  },
+  {
+    title: "AI should support the full workflow",
+    track: "Corporate Innovation",
+    summary:
+      "Product teams should think beyond one feature — AI should help customers move through a complete task: discovery, setup, troubleshooting, decision-making, and follow-up",
+  },
+  {
+    title: "AI should reduce repetitive work",
+    track: "Corporate Innovation",
+    summary:
+      "AI should take on routine tasks so employees can focus on judgment, customer relationships, and higher-value work",
+  },
+  {
+    title: "Design should reduce friction, not add another layer",
+    track: "Creative Summit",
+    summary:
+      "AI should make tasks easier, faster, and clearer — if customers have to work harder to understand the AI feature, the design has missed the point",
+  },
+  {
+    title: "Start with real customer problems",
+    track: "Corporate Innovation",
+    summary:
+      "AI should be added where it solves actual pain points for employees or customers, not just because it sounds innovative",
+  },
+  {
+    title: "Operations need to be ready before scaling",
+    track: "Corporate Innovation",
+    summary:
+      "Before launching AI widely, teams need processes in place; AI is not \"set it and forget it\" — it is like hiring a very fast intern who occasionally needs supervision",
+  },
+  {
+    title: "Design for usability, not just capability",
+    track: "Creative Summit",
+    summary:
+      "A feature may be powerful, but if customers do not understand how to use it, trust it, or fit it into their workflow, adoption will be low",
+  },
+  {
+    title: "Market analysis should guide AI priorities",
+    track: "Marketing Summit",
+    summary:
+      "Product teams should look at customer demand, competitor moves, industry trends, and adoption barriers before deciding which AI features are worth building",
+  },
+];
+
+const HIGHLIGHT_STANDOUT_QUOTES = [
+  "Today's software is tomorrow's software prompt",
+  "AI is this universal translator - it can translate between any software",
+  "You're going to be managing your little army of minions",
+  "We need to move past the copy-paste monkey approach to using AI models",
+  "Have the pilot mindset, not the passenger mindset",
+  "If something becomes cheaper and easier to use, it becomes more abundant",
+  "Innovation moves at the speed of technology, but citizens move at the speed of trust",
+  "As creators, we're encouraged to make something, to feed it to AI, to tweak it, to bring it back and tweak it again",
+  "People will be resistant to AI if there is no appropriate value exchange",
+  "Paid advertising will matter more in a world of infinite AI content",
+];
+
+const TELECOM_STARTUP_LOGOS = [
+  {
+    src: "./assets/telecom-logo-1.png",
+    name: "LimitlessAI",
+    sector: "AI & machine learning",
+    location: "Canada",
+    description: "AI-powered personalized memory assistant and transcription tool",
+    url: "https://limitlessai.ca/",
+  },
+  {
+    src: "./assets/telecom-logo-2.png",
+    name: "Notarify",
+    sector: "SaaS",
+    location: "Italy",
+    description: "Encrypted cloud archive for managing data and files",
+    url: "https://notarify.io/",
+  },
+  {
+    src: "./assets/telecom-logo-3.png",
+    name: "MIGAM AI",
+    sector: "AI & machine learning",
+    location: "Poland",
+    description: "A photorealistic AI avatar that translates content into sign language",
+    url: "https://www.migam.ai/",
+  },
+  {
+    src: "./assets/telecom-logo-4.png",
+    name: "Spalk",
+    sector: "Entertainment & media",
+    location: "United States",
+    description: "Commentary infrastructure for global sport",
+    url: "https://www.spalk.tv/",
+  },
+  {
+    src: "./assets/telecom-logo-5.png",
+    name: "CubicSpace",
+    sector: "Gaming, VR & AR",
+    location: "Canada",
+    description: "Spatial media and 3D imaging technologies",
+    url: "https://www.cubicspace3d.com/",
+  },
+  {
+    src: "./assets/telecom-logo-6.png",
+    name: "IndyKite",
+    sector: "SaaS",
+    location: "United States",
+    description: "Solution for enterprises to govern, secure, and trace data for AI agents",
+    url: "https://www.indykite.ai/",
+  },
+  {
+    src: "./assets/telecom-logo-7.png",
+    name: "Pointee Inc.",
+    sector: "AI & machine learning",
+    location: "Czechia",
+    description: "AI-powered process analytics and automation management platform",
+    url: "https://www.pointee.com/",
+  },
+  {
+    src: "./assets/telecom-logo-8.png",
+    name: "Innovorg Inc.",
+    sector: "SaaS",
+    location: "Canada",
+    description: "Workforce intelligence and skills-building platform",
+    url: "https://innovorg.com/",
+  },
+  {
+    src: "./assets/telecom-logo-9.png",
+    name: "Arqaios, Inc",
+    sector: "Healthtech & wellness",
+    location: "United States",
+    description: "Smart home and building technology for AI-powered fixtures",
+    url: "https://arqaios.com/",
+  },
+  {
+    src: "./assets/telecom-logo-10.png",
+    name: "ReasonOS",
+    sector: "AI & machine learning",
+    location: "United States",
+    description: "AI-powered agentic operating system for software engineering and DevOps",
+    url: "https://www.reasonos.com/",
+  },
+];
+
+const TELECOM_STARTUP_THEMES = {
+  blurb:
+    "AI-enabled B2B infrastructure—platforms that help enterprises and ecosystems handle data, automate work, and deliver richer digital experiences",
+  bullets: [
+    "AI is showing up across most of the startups, either as the main product or as a key part of how the service works.",
+    "Many startups are using AI to save time by handling repetitive work like follow-ups, documentation, onboarding, and admin tasks.",
+    "AI agents are becoming more action-oriented, helping complete tasks instead of only answering questions.",
+    "Real context makes AI more useful, especially when it can understand customer data, calls, tickets, system information, or user activity.",
+    "AI is being used to make faster decisions, such as spotting risks, understanding customer intent, or tracking performance.",
+    "The best examples connect AI to clear results, like more leads, faster work, better support, and fewer mistakes.",
+    "AI is mostly being used to support people and processes, not fully replace them.",
+  ],
+};
+
+function getTrackLabel(track) {
+  return TRACK_LABELS[track] || track;
+}
+
+function parseSpeakerLabel(speakerLabel) {
+  const match = speakerLabel.match(/^(.*?)\s*\((.*)\)$/);
+  if (!match) {
+    return { name: speakerLabel.trim(), details: "" };
+  }
+
+  return {
+    name: match[1].trim(),
+    details: match[2].trim(),
+  };
+}
+
+const ALL_SESSION_SPEAKERS = Array.from(
+  Object.values(SESSIONS)
+    .flat()
+    .flatMap((session) => session.speakers || [])
+    .reduce((map, speakerLabel) => {
+      const parsedSpeaker = parseSpeakerLabel(speakerLabel);
+      const existingSpeaker = map.get(parsedSpeaker.name);
+
+      if (!existingSpeaker || parsedSpeaker.details.length > existingSpeaker.details.length) {
+        map.set(parsedSpeaker.name, parsedSpeaker);
+      }
+
+      return map;
+    }, new Map())
+    .values()
+).sort((a, b) => a.name.localeCompare(b.name));
+
+const SPEAKER_PAGE_IMAGES = [
+  {
+    src: "./assets/speaker-photo-1.png",
+    name: "Matt Lyteson",
+    title: "CIO IBM",
+  },
+  {
+    src: "./assets/speaker-photo-2.png",
+    name: "Alexander Rinke",
+    title: "Co-founder & Co-CEO Celonis",
+  },
+  {
+    src: "./assets/speaker-photo-3.png",
+    name: "Michael Komasinski",
+    title: "CEO Criteo",
+  },
+  {
+    src: "./assets/speaker-photo-4.png",
+    name: "Joelle Pineau",
+    title: "Chief AI Officer Cohere",
+  },
+  {
+    src: "./assets/speaker-photo-5.png",
+    name: "Evan Solomon",
+    title: "Minister of AI and Digital Innovation",
+  },
+];
+
+function TagPill({ tag, fontSize = "10px" }) {
+  return (
+    <span style={{
+      background: "#ffffff0d",
+      border: "1px solid #ffffff18",
+      color: "#aaa",
+      padding: "2px 8px",
+      borderRadius: "8px",
+      fontSize,
+      fontWeight: 500,
+    }}>
+      {tag}
+    </span>
+  );
+}
+
+/** Schedule list cards: soft hairlines (top/right/bottom) so they read thinner than modal #ffffff26 edges. */
+const SCHEDULE_CARD_HAIRLINE = "rgba(255,255,255,0.072)";
+const SCHEDULE_CARD_BG = "#ffffff06";
+const SCHEDULE_CARD_BG_HOVER = "#ffffff0e";
+const SCHEDULE_TAB_BG = "#ffffff08";
+const SCHEDULE_TAB_BG_HOVER = "#ffffff12";
+const SCHEDULE_TAB_ACTIVE_BG = "linear-gradient(135deg, #7c6fff33, #c77dff22)";
+const SCHEDULE_TAB_ACTIVE_BG_HOVER = "linear-gradient(135deg, #7c6fff42, #c77dff30)";
+const MAIN_TAB_COLOR_INACTIVE = "#666";
+const MAIN_TAB_COLOR_INACTIVE_HOVER = "#b8b8c8";
+const MAIN_TAB_COLOR_ACTIVE = "#e8e8ff";
+const MAIN_TAB_COLOR_ACTIVE_HOVER = "#ffffff";
+const MAIN_TAB_BORDER_INACTIVE = "2px solid transparent";
+const MAIN_TAB_BORDER_INACTIVE_HOVER = "2px solid rgba(124, 111, 255, 0.4)";
+const MAIN_TAB_BORDER_ACTIVE = "2px solid #7c6fff";
+
+function getSessionCardTheme(session) {
+  const trackColor = TRACK_COLORS[session.track] || TRACK_COLORS["Centre Stage"];
+  const accent = session.accentOverride ?? trackColor.accent;
+  const cardEdgeColor = "#ffffff26";
+  return {
+    accent,
+    cardBackground: SCHEDULE_CARD_BG,
+    cardEdgeColor,
+  };
+}
+
+function accentWithAlpha(hex, alpha) {
+  if (!hex || hex[0] !== "#" || hex.length !== 7) return hex;
+  const a = Math.round(alpha * 255)
+    .toString(16)
+    .padStart(2, "0");
+  return `${hex}${a}`;
+}
+
+function SessionModal({ session, onClose, openedFromDayId }) {
+  const { accent, cardEdgeColor } = getSessionCardTheme(session);
+  const hideEventNote =
+    session.hideNoteInModal === true ||
+    (openedFromDayId && MODAL_HIDE_NOTE_DAY_IDS.has(openedFromDayId));
+  const openedDayLabel = DAYS.find((day) => day.id === openedFromDayId)?.label;
+
+  useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pl-[max(0.75rem,env(safe-area-inset-left))] pr-[max(0.75rem,env(safe-area-inset-right))] pt-[max(0.75rem,env(safe-area-inset-top))] sm:p-6"
+      onClick={onClose}
+      role="presentation"
+    >
+      <div
+        className="relative flex max-h-[min(90vh,40rem)] w-full max-w-lg flex-col overflow-hidden rounded-2xl shadow-2xl"
+        style={{
+          backgroundColor: "#000000",
+          borderTop: `1px solid ${cardEdgeColor}`,
+          borderRight: `1px solid ${cardEdgeColor}`,
+          borderBottom: `1px solid ${cardEdgeColor}`,
+          borderLeft: `4px solid ${accent}`,
+          boxSizing: "border-box",
+        }}
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="session-modal-title"
+      >
+        <div className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-6">
+        <div className="mb-4 flex items-start justify-between gap-3">
+          <h2
+            id="session-modal-title"
+            className="flex-1 pr-2 text-base font-semibold leading-snug text-[#f0f0ff] sm:text-lg"
+          >
+            {session.title}
+          </h2>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="shrink-0 cursor-pointer border-0 bg-transparent p-0 text-3xl font-light leading-none text-white transition hover:opacity-75"
+          >
+            ×
+          </button>
+        </div>
+
+        <div className="mb-3">
+          <span
+            className="font-mono text-[11px] font-bold sm:text-xs"
+            style={{ color: accent }}
+          >
+            {openedDayLabel ? `${openedDayLabel}, ${session.time}` : session.time}
+          </span>
+        </div>
+
+        <div
+          className="mb-2 text-[11px] font-medium opacity-[0.85] sm:text-xs"
+          style={{ color: accent }}
+        >
+          {getTrackLabel(session.track)}{session.location ? ` · ${session.location}` : ""}
+        </div>
+
+        {session.speakers.length > 0 && (
+          <div className="mb-2 text-xs text-[#999] sm:text-sm">
+            {session.speakers.join(" · ")}
+          </div>
+        )}
+
+        {session.tags && session.tags.length > 0 && (
+          <div className="mb-3 flex flex-wrap gap-1">
+            {session.tags.map((t) => <TagPill key={t} tag={t} />)}
+          </div>
+        )}
+
+        {session.modalSummaryPdf && (
+          <a
+            href={session.modalSummaryPdf}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              marginBottom: "12px",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              padding: "5px 10px",
+              fontSize: "11.5px",
+              fontWeight: 300,
+              color: accent,
+              textDecoration: "none",
+              outline: "none",
+              border: `0.5px solid ${accentWithAlpha(accent, 0.3)}`,
+              borderRadius: "7px",
+              background: "#ffffff08",
+              boxShadow: "none",
+              cursor: "pointer",
+              transition: "background 0.2s, border-color 0.2s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "#ffffff12";
+              e.currentTarget.style.borderColor = `${accent}55`;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "#ffffff08";
+              e.currentTarget.style.borderColor = accentWithAlpha(accent, 0.3);
+            }}
+            onFocus={(e) => {
+              e.currentTarget.style.outline = "none";
+              e.currentTarget.style.boxShadow = "none";
+              e.currentTarget.style.background = "#ffffff12";
+              e.currentTarget.style.borderColor = `${accent}55`;
+            }}
+            onBlur={(e) => {
+              e.currentTarget.style.background = "#ffffff08";
+              e.currentTarget.style.borderColor = accentWithAlpha(accent, 0.3);
+            }}
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden
+            >
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" y1="14" x2="21" y2="3" />
+            </svg>
+            See summary
+          </a>
+        )}
+
+        {session.modalImage && (
+          <div className="mb-3 overflow-hidden rounded-xl border border-white/10 bg-black/20">
+            <img
+              src={session.modalImage}
+              alt="Web Summit stage"
+              className="max-h-[min(50vh,22rem)] w-full object-cover object-center sm:max-h-[min(55vh,26rem)]"
+            />
+          </div>
+        )}
+
+        {session.modalQuote && session.modalQuoteAfterImage && (
+          <blockquote
+            className="mb-4 rounded-r-lg border-l-[4px] py-2.5 pl-3 pr-3 text-xs font-semibold italic leading-snug tracking-tight text-[#f6f6ff] sm:text-sm"
+            style={{
+              borderLeftColor: accent,
+              background: `linear-gradient(105deg, ${accent}28 0%, ${accent}10 45%, transparent 100%)`,
+              boxShadow: `inset 0 0 0 1px ${accent}26, 0 6px 20px rgba(0,0,0,0.28)`,
+            }}
+          >
+            &ldquo;{session.modalQuote}&rdquo;
+          </blockquote>
+        )}
+
+        {session.modalCoreTakeaway && (
+          <div className="mb-4">
+            <p
+              className="mb-2 text-xs font-bold uppercase tracking-wide sm:text-sm"
+              style={{ color: accent }}
+            >
+              Core Takeaway
+            </p>
+            <p className="m-0 text-xs leading-relaxed text-[#b8b8c8] sm:text-sm">
+              {session.modalCoreTakeaway}
+            </p>
+          </div>
+        )}
+
+        {(session.modalSubheading ||
+          (session.modalGoals && session.modalGoals.length > 0) ||
+          (session.modalPartners && session.modalPartners.length > 0)) && (
+          <div className="mb-4 space-y-4 border-t border-white/10 pt-4">
+            {session.modalSubheading && (
+              <h3
+                className={
+                  session.modalSubheadingSmall
+                    ? "m-0 text-xs font-medium leading-snug text-[#a8a8bc] sm:text-sm"
+                    : "m-0 text-base font-semibold leading-snug text-[#f0f0ff] sm:text-lg"
+                }
+              >
+                {session.modalSubheading}
+              </h3>
+            )}
+            {session.modalGoals && session.modalGoals.length > 0 && (
+              <div>
+                <p
+                  className="mb-2 text-xs font-bold uppercase tracking-wide sm:text-sm"
+                  style={{ color: accent }}
+                >
+                  Goals
+                </p>
+                <ul
+                  className="m-0 list-disc space-y-2.5 pl-5 text-xs leading-relaxed text-[#a8a8bc] sm:text-sm"
+                  style={{ listStyleColor: accent }}
+                >
+                  {session.modalGoals.map((line, i) => (
+                    <li key={i} className="pl-0.5">
+                      {line}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {session.modalPartners && session.modalPartners.length > 0 && (
+              <div>
+                <p
+                  className="mb-2 text-xs font-bold uppercase tracking-wide sm:text-sm"
+                  style={{ color: accent }}
+                >
+                  Partners
+                </p>
+                <div className="space-y-3">
+                  {session.modalPartners.map((p, i) => (
+                    <p key={i} className="m-0 text-xs leading-relaxed text-[#a8a8bc] sm:text-sm">
+                      <span className="font-semibold" style={{ color: accent }}>
+                        {p.name}
+                        {": "}
+                      </span>
+                      {p.text}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {(session.modalBio || (session.modalQuote && !session.modalQuoteAfterImage) || (session.modalKeyPoints && session.modalKeyPoints.length > 0 && !session.modalBottomImageBeforeKeyPoints)) && (
+          <div className="space-y-4 border-t border-white/10 pt-4">
+            {session.modalBio && (
+              <p className="m-0 text-xs leading-relaxed text-[#b8b8c8] sm:text-sm">
+                {session.modalBio}
+              </p>
+            )}
+            {session.modalQuote && !session.modalQuoteAfterImage && (
+              <blockquote
+                className={session.modalSmallQuote
+                  ? "m-0 rounded-r-lg border-l-[5px] py-3 pl-4 pr-3 text-xs font-semibold italic leading-snug tracking-tight text-[#f6f6ff] sm:text-sm"
+                  : "m-0 rounded-r-lg border-l-[5px] py-3.5 pl-4 pr-3 text-sm font-semibold italic leading-snug tracking-tight text-[#f6f6ff] sm:text-base"}
+                style={{
+                  borderLeftColor: accent,
+                  background: `linear-gradient(105deg, ${accent}35 0%, ${accent}12 45%, transparent 100%)`,
+                  boxShadow: `inset 0 0 0 1px ${accent}33, 0 8px 24px rgba(0,0,0,0.35)`,
+                }}
+              >
+                &ldquo;{session.modalQuote}&rdquo;
+              </blockquote>
+            )}
+            {session.modalKeyPoints && session.modalKeyPoints.length > 0 && (
+              <div>
+                <p
+                  className="mb-2 text-xs font-bold uppercase tracking-wide sm:text-sm"
+                  style={{ color: accent }}
+                >
+                  Key Points
+                </p>
+                <ul
+                  className="m-0 list-disc space-y-2.5 pl-5 text-xs leading-relaxed text-[#a8a8bc] sm:text-sm"
+                  style={{ listStyleColor: accent }}
+                >
+                  {session.modalKeyPoints.map((line, i) => (
+                    <li key={i} className="pl-0.5">
+                      {line}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
+
+        {session.note && !hideEventNote ? (
+          <p className="m-0 text-xs italic leading-relaxed text-[#7a7a8e] sm:text-sm">
+            {session.note}
+          </p>
+        ) : null}
+
+        {session.modalBottomImage && (
+          <div className="mt-4 overflow-hidden rounded-xl border border-white/10 bg-black/20">
+            <img
+              src={session.modalBottomImage}
+              alt="Supporting slide"
+              className="max-h-[min(50vh,22rem)] w-full object-cover object-center sm:max-h-[min(55vh,26rem)]"
+            />
+          </div>
+        )}
+
+        {session.modalKeyPoints && session.modalKeyPoints.length > 0 && session.modalBottomImageBeforeKeyPoints && (
+          <div className="mt-4">
+            <p
+              className="mb-2 text-xs font-bold uppercase tracking-wide sm:text-sm"
+              style={{ color: accent }}
+            >
+              Key Points
+            </p>
+            <ul
+              className="m-0 list-disc space-y-2.5 pl-5 text-xs leading-relaxed text-[#a8a8bc] sm:text-sm"
+              style={{ listStyleColor: accent }}
+            >
+              {session.modalKeyPoints.map((line, i) => (
+                <li key={i} className="pl-0.5">
+                  {line}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const VALID_APP_TABS = ["summary", "highlights", "schedule", "speakers", "tracks"];
+
+function sessionSlug(title) {
+  return title
+    .toLowerCase()
+    .replace(/['']/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function findSessionBySlug(slug) {
+  if (!slug) return null;
+  for (const day of DAYS) {
+    for (const session of SESSIONS[day.id] || []) {
+      if (sessionSlug(session.title) === slug) {
+        return { session, dayId: day.id };
+      }
+    }
+  }
+  return null;
+}
+
+function parseAppRoute() {
+  const params = new URLSearchParams(window.location.search);
+  const tab = params.get("tab") || "summary";
+  const trackParam = params.get("track");
+  const track =
+    trackParam && FOCUS_TRACKS.some((t) => t.name === trackParam)
+      ? trackParam
+      : FOCUS_TRACKS[0].name;
+  const modal = findSessionBySlug(params.get("session"));
+  return {
+    tab: VALID_APP_TABS.includes(tab) ? tab : "summary",
+    track,
+    modal,
+  };
+}
+
+function buildAppSearch({ tab, track, modal }) {
+  const params = new URLSearchParams();
+  params.set("tab", tab);
+  if (tab === "schedule") {
+    params.set("track", track);
+    if (modal?.session) {
+      params.set("session", sessionSlug(modal.session.title));
+    }
+  }
+  return `?${params.toString()}`;
+}
+
+/** `depth` counts in-app history entries; 0 is the entry the visitor landed on. */
+function toHistoryState({ tab, track, modal }, depth) {
+  return {
+    tab,
+    track,
+    session: modal?.session ? sessionSlug(modal.session.title) : null,
+    depth,
+  };
+}
+
+function fromHistoryState(state) {
+  if (!state || typeof state.tab !== "string") {
+    return parseAppRoute();
+  }
+  const track =
+    state.track && FOCUS_TRACKS.some((t) => t.name === state.track)
+      ? state.track
+      : FOCUS_TRACKS[0].name;
+  const modal = state.session ? findSessionBySlug(state.session) : null;
+  return {
+    tab: VALID_APP_TABS.includes(state.tab) ? state.tab : "summary",
+    track,
+    modal,
+  };
+}
+
+function WebSummitGuide() {
+  const initialRoute = parseAppRoute();
+  const historySyncRef = useRef(false);
+  const historyInitRef = useRef(true);
+  const [activeTrack, setActiveTrack] = useState(initialRoute.track);
+  const [activeTab, setActiveTab] = useState(initialRoute.tab);
+  const [scheduleModal, setScheduleModal] = useState(
+    initialRoute.tab === "schedule" ? initialRoute.modal : null
+  );
+
+  const scheduleSessions = DAYS.flatMap((day) =>
+    (SESSIONS[day.id] || [])
+      .filter((session) => session.track === activeTrack)
+      .map((session, index) => ({
+        session,
+        dayId: day.id,
+        dayLabel: day.label,
+        index,
+      }))
+  );
+
+  function applyRoute(route) {
+    setActiveTab(route.tab);
+    setActiveTrack(route.track);
+    setScheduleModal(route.tab === "schedule" ? route.modal : null);
+  }
+
+  useEffect(() => {
+    const route = {
+      tab: activeTab,
+      track: activeTrack,
+      modal: scheduleModal,
+    };
+    window.history.replaceState(
+      toHistoryState(route, window.history.state?.depth ?? 0),
+      "",
+      `${window.location.pathname}${buildAppSearch(route)}`
+    );
+
+    function onPopState(event) {
+      historySyncRef.current = true;
+      applyRoute(fromHistoryState(event.state));
+      historySyncRef.current = false;
+    }
+
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+
+  useEffect(() => {
+    if (historyInitRef.current) {
+      historyInitRef.current = false;
+      return;
+    }
+    if (historySyncRef.current) return;
+    const route = {
+      tab: activeTab,
+      track: activeTrack,
+      modal: scheduleModal,
+    };
+    const search = buildAppSearch(route);
+    if (search === window.location.search) return;
+    window.history.pushState(
+      toHistoryState(route, (window.history.state?.depth ?? 0) + 1),
+      "",
+      `${window.location.pathname}${search}`
+    );
+  }, [activeTab, activeTrack, scheduleModal]);
+
+  function goToScheduleTrack(trackName) {
+    setActiveTrack(trackName);
+    setActiveTab("schedule");
+    setScheduleModal(null);
+  }
+
+  function openScheduleModal(session, dayId) {
+    setActiveTab("schedule");
+    setActiveTrack(session.track);
+    setScheduleModal({ session, dayId });
+  }
+
+  function closeScheduleModal() {
+    // Only step back when the previous entry is ours; a shared session link
+    // opened directly has nothing in-app behind it, so show the list instead.
+    if (window.history.state?.session && window.history.state.depth > 0) {
+      window.history.back();
+      return;
+    }
+    setScheduleModal(null);
+  }
+
+  return (
+    <div style={{
+      fontFamily: "'DM Sans', 'Helvetica Neue', sans-serif",
+      background: "#0a0a12",
+      color: "#e8e8f0",
+      minHeight: "100vh",
+      padding: "0",
+    }}>
+      {/* Header */}
+      <div style={{
+        background: "linear-gradient(135deg, #1a1030 0%, #0a0a18 50%, #0d1a2a 100%)",
+        padding: "32px 24px 24px",
+        borderBottom: "1px solid #ffffff10",
+      }}>
+        <div style={{
+          fontFamily: "'Space Mono', monospace",
+          fontSize: "12.5px",
+          color: "#7c6fff",
+          textTransform: "uppercase",
+          letterSpacing: "3px",
+          marginBottom: "8px",
+        }}>
+          Conference Insights
+        </div>
+        <h1 style={{
+          fontSize: "32.5px",
+          fontWeight: 700,
+          margin: "0 0 4px",
+          lineHeight: 1.2,
+        }}>
+          <span style={{
+            display: "inline-block",
+            maxWidth: "100%",
+            backgroundImage: "linear-gradient(135deg, #e8e8ff 0%, #c77dff 50%, #7c6fff 100%)",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "100% 100%",
+            WebkitBackgroundClip: "text",
+            backgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            color: "transparent",
+          }}>
+            Web Summit Vancouver 2026
+          </span>
+        </h1>
+        <p style={{ color: "#888", fontSize: "16.25px", margin: "4px 0 0" }}>
+          May 11–14 · Vancouver Convention Centre
+        </p>
+      </div>
+
+      {/* Tab Navigation */}
+      <div style={{
+        display: "flex",
+        gap: "0",
+        borderBottom: "1px solid #ffffff10",
+        background: "#0d0d18",
+        position: "sticky",
+        top: 0,
+        zIndex: 10,
+      }}>
+        {[
+          { id: "summary", label: "Overview" },
+          { id: "highlights", label: "Highlights" },
+          { id: "schedule", label: "Session Breakdown" },
+          // Add Tracks tab: restore { id: "tracks", label: "Tracks" } here.
+          { id: "speakers", label: "Speakers" },
+        ].map((tab) => {
+          const isActive = activeTab === tab.id;
+          const tabColor = isActive ? MAIN_TAB_COLOR_ACTIVE : MAIN_TAB_COLOR_INACTIVE;
+          const tabBorder = isActive ? MAIN_TAB_BORDER_ACTIVE : MAIN_TAB_BORDER_INACTIVE;
+          return (
+          <button
+            key={tab.id}
+            type="button"
+            onClick={() => {
+              setActiveTab(tab.id);
+              if (tab.id !== "schedule") setScheduleModal(null);
+            }}
+            style={{
+              flex: 1,
+              padding: "14px 8px",
+              background: "transparent",
+              border: "none",
+              borderBottom: tabBorder,
+              color: tabColor,
+              fontSize: "16.25px",
+              fontWeight: isActive ? 600 : 400,
+              cursor: "pointer",
+              fontFamily: "inherit",
+              transition: "color 0.2s, border-color 0.2s",
+            }}
+            onMouseEnter={(e) => {
+              if (isActive) {
+                e.currentTarget.style.color = MAIN_TAB_COLOR_ACTIVE_HOVER;
+              } else {
+                e.currentTarget.style.color = MAIN_TAB_COLOR_INACTIVE_HOVER;
+                e.currentTarget.style.borderBottom = MAIN_TAB_BORDER_INACTIVE_HOVER;
+              }
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = tabColor;
+              e.currentTarget.style.borderBottom = tabBorder;
+            }}
+          >
+            {tab.label}
+          </button>
+          );
+        })}
+      </div>
+
+      <div style={{ padding: "16px 20px 40px" }}>
+
+        {/* SUMMARY TAB */}
+        {activeTab === "summary" && (
+          <div>
+            <h2 style={{ fontSize: "22.5px", fontWeight: 600, margin: "8px 0 16px", color: "#e8e8ff" }}>
+              At a Glance
+            </h2>
+
+            {/* Event Info */}
+            <div style={{
+              background: "linear-gradient(135deg, #1a103022, #0d1a2a33)",
+              border: "1px solid #7c6fff22",
+              borderRadius: "14px",
+              padding: "18px",
+              marginBottom: "14px",
+            }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                {[
+                  { label: "Dates", value: "Mon May 11 - Thr May 14" },
+                  { label: "Venue", value: "Vancouver Convention Centre" },
+                  { label: "Speakers", value: "350+ across 14 content tracks" },
+                ].map((item, i) => (
+                  <div key={i} style={{ display: "flex", gap: "12px", alignItems: "baseline" }}>
+                    <span style={{
+                      fontFamily: "'Space Mono', monospace",
+                      fontSize: "12.5px",
+                      color: "#7c6fff",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.5px",
+                      minWidth: "100px",
+                      flexShrink: 0,
+                    }}>
+                      {item.label}
+                    </span>
+                    <span style={{ fontSize: "16.25px", color: "#ccc" }}>{item.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Focus Tracks */}
+            <h3 style={{ fontSize: "17.5px", fontWeight: 600, margin: "32px 0 12px", color: "#ffffff" }}>
+              Topics
+            </h3>
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "36px" }}>
+              {FOCUS_TRACKS.map((track, i) => (
+                <div key={i} style={{
+                  display: "flex",
+                  gap: "12px",
+                  alignItems: "center",
+                  background: "#ffffff06",
+                  border: "1px solid #ffffff0a",
+                  borderRadius: "10px",
+                  padding: "12px 14px",
+                  borderLeft: `3px solid ${track.accent}`,
+                }}>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: "16.25px", fontWeight: 600, color: track.accent, marginBottom: "2px" }}>
+                      {getTrackLabel(track.name)}
+                    </div>
+                    <div style={{ fontSize: "13.75px", color: "#888", lineHeight: 1.4 }}>
+                      {track.desc}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => goToScheduleTrack(track.name)}
+                      aria-label={`View ${getTrackLabel(track.name)} session breakdown`}
+                      style={{
+                        marginTop: "8px",
+                        padding: 0,
+                        border: "none",
+                        background: "none",
+                        fontFamily: "inherit",
+                        fontSize: "13.75px",
+                        fontWeight: 300,
+                        color: track.accent,
+                        opacity: 0.5,
+                        cursor: "pointer",
+                        textAlign: "left",
+                        textDecoration: "none",
+                        transition: "opacity 0.15s ease",
+                        maxWidth: "100%",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.opacity = "1";
+                        const label = e.currentTarget.querySelector("[data-session-link-label]");
+                        if (label) {
+                          label.style.borderBottom = "1px solid currentColor";
+                          label.style.paddingBottom = "1px";
+                          label.style.transform = "translateX(3px)";
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.opacity = "0.5";
+                        const label = e.currentTarget.querySelector("[data-session-link-label]");
+                        if (label) {
+                          label.style.borderBottom = "none";
+                          label.style.paddingBottom = "0";
+                          label.style.transform = "translateX(0)";
+                        }
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.opacity = "1";
+                        e.currentTarget.style.outline = `2px solid ${track.accent}55`;
+                        e.currentTarget.style.outlineOffset = "2px";
+                        const label = e.currentTarget.querySelector("[data-session-link-label]");
+                        if (label) {
+                          label.style.borderBottom = "1px solid currentColor";
+                          label.style.paddingBottom = "1px";
+                          label.style.transform = "translateX(3px)";
+                        }
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.opacity = "0.5";
+                        e.currentTarget.style.outline = "none";
+                        const label = e.currentTarget.querySelector("[data-session-link-label]");
+                        if (label) {
+                          label.style.borderBottom = "none";
+                          label.style.paddingBottom = "0";
+                          label.style.transform = "translateX(0)";
+                        }
+                      }}
+                    >
+                      <span
+                        data-session-link-label
+                        style={{
+                          display: "inline-block",
+                          whiteSpace: "nowrap",
+                          transition: "transform 0.15s ease, border-color 0.15s ease",
+                        }}
+                      >
+                        Session breakdown{" "}
+                        <span aria-hidden style={{ fontSize: "0.85em" }}>→</span>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Session Count */}
+            <h3 style={{ fontSize: "17.5px", fontWeight: 600, margin: "36px 0 12px", color: "#ffffff" }}>
+              Sessions
+            </h3>
+            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "36px" }}>
+              {FOCUS_TRACKS.map((track) => {
+                const count = Object.values(SESSIONS)
+                  .flat()
+                  .filter((session) => session.track === track.name).length;
+                return (
+                  <button
+                    key={track.name}
+                    type="button"
+                    onClick={() => goToScheduleTrack(track.name)}
+                    style={{
+                      background: "#ffffff08",
+                      border: "1px solid #ffffff10",
+                      borderRadius: "10px",
+                      padding: "10px 14px",
+                      textAlign: "center",
+                      flex: "1 0 110px",
+                      cursor: "pointer",
+                      fontFamily: "inherit",
+                      transition: "all 0.2s",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "#ffffff12";
+                      e.currentTarget.style.borderColor = `${track.accent}55`;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "#ffffff08";
+                      e.currentTarget.style.borderColor = "#ffffff10";
+                    }}
+                  >
+                    <div style={{ fontSize: "25px", fontWeight: 700, color: "#e8e8ff" }}>{count}</div>
+                    <div style={{ fontSize: "12.5px", color: track.accent, marginTop: "2px", fontWeight: 600 }}>
+                      {getTrackLabel(track.name)}
+                    </div>
+                  </button>
+                );
+              })}
+              <div style={{
+                background: "linear-gradient(135deg, #7c6fff15, #c77dff10)",
+                border: "1px solid #7c6fff33",
+                borderRadius: "10px",
+                padding: "10px 14px",
+                textAlign: "center",
+                flex: "1 0 110px",
+              }}>
+                <div style={{ fontSize: "25px", fontWeight: 700, color: "#c77dff" }}>
+                  {Object.values(SESSIONS).reduce((sum, s) => sum + s.length, 0)}
+                </div>
+                <div style={{ fontSize: "12.5px", color: "#a596ff", marginTop: "2px", fontWeight: 600 }}>
+                  Total
+                </div>
+              </div>
+            </div>
+
+            <div
+              style={{
+                borderTop: "1px solid #ffffff14",
+                marginTop: "40px",
+                paddingTop: "40px",
+              }}
+            >
+            <h3 style={{ fontSize: "17.5px", fontWeight: 600, margin: "0 0 4px", color: "#ffffff" }}>
+              Process
+            </h3>
+            <p style={{ fontSize: "13.75px", color: "#888", margin: "0 0 10px", lineHeight: 1.4 }}>
+              AI tools I used to capture, organize, and summarize insights from conference sessions
+            </p>
+            <div
+              style={{
+                marginTop: "4px",
+              }}
+            >
+              <img
+                src="./assets/process-overview.png"
+                alt="Process workflow"
+                style={{
+                  display: "block",
+                  width: "42.1875%",
+                  maxWidth: "405px",
+                  height: "auto",
+                }}
+              />
+            </div>
+            </div>
+          </div>
+        )}
+
+        {/* HIGHLIGHTS TAB */}
+        {activeTab === "highlights" && (
+          <div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "16px",
+                marginBottom: "20px",
+              }}
+            >
+              <img
+                src="./assets/highlights-icon.png"
+                alt="Highlights icon"
+                style={{
+                  display: "block",
+                  width: "72px",
+                  height: "72px",
+                  objectFit: "contain",
+                  flexShrink: 0,
+                }}
+              />
+              <div style={{ flex: 1 }}>
+                <h2 style={{ fontSize: "22.5px", fontWeight: 600, margin: "8px 0 4px", color: "#e8e8ff" }}>
+                  Key Takeaways
+                </h2>
+                <p style={{ fontSize: "16.25px", color: "#666", margin: "0" }}>
+                  Cross-conference themes that showed up across AI, product, design, marketing, strategy and leadership sessions
+                </p>
+              </div>
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(275px, 1fr))",
+                gap: "12px",
+                alignItems: "stretch",
+              }}
+            >
+              {HIGHLIGHT_THEMES.map((item, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      background: "#ffffff06",
+                      border: "1px solid #ffffff0a",
+                      borderRadius: "12px",
+                      padding: "14px 16px",
+                      borderLeft: "3px solid #ffffff",
+                      minHeight: "100%",
+                    }}
+                  >
+                    <div style={{ fontSize: "15.1875px", fontWeight: 600, color: "#f0f0ff", marginBottom: "6px" }}>
+                      {item.title}
+                    </div>
+                    <div style={{ fontSize: "13.5px", color: "#9a9ab0", lineHeight: 1.55 }}>
+                      {item.summary}
+                    </div>
+                  </div>
+              ))}
+            </div>
+
+            <div
+              style={{
+                borderTop: "1px solid #ffffff14",
+                marginTop: "28px",
+                paddingTop: "24px",
+              }}
+            >
+              <h3 style={{ fontSize: "20px", fontWeight: 600, margin: "0 0 12px", color: "#e8e8ff" }}>
+                Standout Quotes
+              </h3>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+                  gap: "14px",
+                  alignItems: "stretch",
+                }}
+              >
+                {HIGHLIGHT_STANDOUT_QUOTES.map((quote, i) => (
+                  <blockquote
+                    key={i}
+                    style={{
+                      margin: 0,
+                      display: "flex",
+                      gap: "14px",
+                      alignItems: "flex-start",
+                      background:
+                        "linear-gradient(155deg, rgba(124,111,255,0.14) 0%, rgba(18,16,32,0.92) 42%, rgba(199,125,255,0.06) 100%)",
+                      border: "1px solid rgba(124,111,255,0.22)",
+                      borderRadius: "16px",
+                      padding: "18px 18px 20px 16px",
+                      boxShadow: "0 10px 28px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06)",
+                    }}
+                  >
+                    <span
+                      aria-hidden
+                      style={{
+                        flexShrink: 0,
+                        fontSize: "2.512rem",
+                        lineHeight: 0.85,
+                        fontFamily: 'Georgia, "Times New Roman", serif',
+                        color: "rgba(124,111,255,0.55)",
+                        marginTop: "-2px",
+                      }}
+                    >
+                      &ldquo;
+                    </span>
+                    <p
+                      style={{
+                        margin: 0,
+                        flex: 1,
+                        fontSize: "13.89px",
+                        lineHeight: 1.65,
+                        color: "#e6e6f4",
+                        fontStyle: "italic",
+                        fontWeight: 500,
+                        letterSpacing: "0.01em",
+                      }}
+                    >
+                      {quote}
+                    </p>
+                  </blockquote>
+                ))}
+              </div>
+            </div>
+
+
+            <div
+              style={{
+                borderTop: "1px solid #ffffff14",
+                marginTop: "28px",
+                paddingTop: "24px",
+              }}
+            >
+              <h3 style={{ fontSize: "20px", fontWeight: 600, margin: "0 0 12px", color: "#e8e8ff" }}>
+                Notable Startups
+              </h3>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(158px, 1fr))",
+                  gap: "10px",
+                }}
+              >
+                {TELECOM_STARTUP_LOGOS.map((startup) => (
+                  <a
+                    key={startup.src}
+                    href={startup.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      textDecoration: "none",
+                      color: "inherit",
+                      background: "#ffffff08",
+                      borderRadius: "12px",
+                      padding: "6px",
+                      minHeight: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "stretch",
+                      justifyContent: "flex-start",
+                      border: "1px solid #ffffff12",
+                      overflow: "hidden",
+                      cursor: "pointer",
+                      transition: "background 0.2s, border-color 0.2s",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "#ffffff12";
+                      e.currentTarget.style.borderColor = "rgba(124,111,255,0.35)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "#ffffff08";
+                      e.currentTarget.style.borderColor = "#ffffff12";
+                    }}
+                  >
+                    <div
+                      style={{
+                        background: "#ffffff",
+                        borderRadius: "10px",
+                        padding: "6px",
+                        minHeight: "77px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <img
+                        src={startup.src}
+                        alt={`${startup.name} logo`}
+                        style={{
+                          display: "block",
+                          width: "100%",
+                          height: "100%",
+                          maxHeight: "62px",
+                          objectFit: "contain",
+                        }}
+                      />
+                    </div>
+                    <div style={{ marginTop: "8px" }}>
+                      <div style={{ fontSize: "13.75px", fontWeight: 600, color: "#e8e8ff", lineHeight: 1.35 }}>
+                        {startup.name}
+                      </div>
+                      <div style={{ fontSize: "12.5px", color: "#9a9ab0", marginTop: "2px", lineHeight: 1.35 }}>
+                        {startup.sector}
+                      </div>
+                      <div style={{ fontSize: "12.5px", color: "#9a9ab0", marginTop: "2px", lineHeight: 1.35 }}>
+                        {startup.location}
+                      </div>
+                      <div
+                        style={{
+                          borderTop: "1px solid #ffffff14",
+                          marginTop: "8px",
+                          paddingTop: "8px",
+                        }}
+                      >
+                        <div style={{ fontSize: "12.5px", color: "#b8b8d0", lineHeight: 1.45 }}>
+                          {startup.description}
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+
+              <div
+                style={{
+                  marginTop: "18px",
+                  background: "#ffffff06",
+                  border: "1px solid #ffffff10",
+                  borderRadius: "12px",
+                  padding: "16px",
+                }}
+              >
+                <h4 style={{ fontSize: "16.5px", fontWeight: 600, margin: "0 0 12px", color: "#e8e8ff" }}>
+                  Startups Themes
+                </h4>
+                <p style={{ fontSize: "16.5px", color: "#d6d6e6", lineHeight: 1.6, margin: "0 0 12px" }}>
+                  {TELECOM_STARTUP_THEMES.blurb}
+                </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                  {TELECOM_STARTUP_THEMES.bullets.map((item) => (
+                    <div key={item} style={{ display: "flex", gap: "8px", alignItems: "flex-start" }}>
+                      <span style={{ color: "#7c6fff", lineHeight: 1.6, fontSize: "16.5px" }}>•</span>
+                      <span style={{ fontSize: "16.5px", color: "#9a9ab0", lineHeight: 1.6 }}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* SCHEDULE TAB */}
+        {activeTab === "schedule" && (
+          <>
+            {/* Category Tabs */}
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+              gap: "10px",
+              marginBottom: "20px",
+            }}>
+              {FOCUS_TRACKS.map((track) => {
+                const isActive = activeTrack === track.name;
+                const tabBackground = isActive ? SCHEDULE_TAB_ACTIVE_BG : SCHEDULE_TAB_BG;
+                const tabBackgroundHover = isActive ? SCHEDULE_TAB_ACTIVE_BG_HOVER : SCHEDULE_TAB_BG_HOVER;
+                return (
+                <button
+                  key={track.name}
+                  type="button"
+                  onClick={() => setActiveTrack(track.name)}
+                  style={{
+                    width: "100%",
+                    padding: "14px 20px",
+                    background: tabBackground,
+                    border: isActive ? "1px solid #7c6fff55" : "1px solid #ffffff10",
+                    borderRadius: "12px",
+                    color: isActive ? "#e8e8ff" : "#888",
+                    cursor: "pointer",
+                    fontFamily: "inherit",
+                    textAlign: "center",
+                    transition: "background 0.2s",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = tabBackgroundHover;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = tabBackground;
+                  }}
+                >
+                  <div style={{ fontSize: "14.0625px", fontWeight: 600 }}>{getTrackLabel(track.name)}</div>
+                </button>
+                );
+              })}
+            </div>
+
+            {/* Sessions List */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+              {scheduleSessions.map(({ session, dayId, dayLabel, index }) => {
+                const { accent, cardBackground } = getSessionCardTheme(session);
+                return (
+                  <div
+                    key={`${dayId}-${session.title}-${session.time}-${index}`}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => openScheduleModal(session, dayId)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        openScheduleModal(session, dayId);
+                      }
+                    }}
+                    className="cursor-pointer rounded-[10px] transition-colors duration-200"
+                    style={{
+                      backgroundColor: cardBackground,
+                      backgroundImage: `linear-gradient(90deg, ${accent} 0, ${accent} 3px, transparent 3px)`,
+                      backgroundRepeat: "no-repeat",
+                      padding: "12px 14px",
+                      borderTop: `1px solid ${SCHEDULE_CARD_HAIRLINE}`,
+                      borderRight: `1px solid ${SCHEDULE_CARD_HAIRLINE}`,
+                      borderBottom: `1px solid ${SCHEDULE_CARD_HAIRLINE}`,
+                      borderLeft: "none",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = SCHEDULE_CARD_BG_HOVER;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = cardBackground;
+                    }}
+                  >
+                    <div style={{
+                      marginBottom: "8px",
+                    }}>
+                      <span style={{
+                        fontFamily: "'Space Mono', monospace",
+                        fontSize: "13.75px",
+                        color: accent,
+                        fontWeight: 700,
+                      }}>
+                        {dayLabel}, {session.time}
+                      </span>
+                    </div>
+
+                    <h3 style={{
+                      fontSize: "18.75px",
+                      fontWeight: 600,
+                      margin: "0 0 6px",
+                      color: "#f0f0ff",
+                      lineHeight: 1.3,
+                    }}>
+                      {session.title}
+                    </h3>
+
+                    <div style={{
+                      fontSize: "13.75px",
+                      color: accent,
+                      fontWeight: 500,
+                      marginBottom: "6px",
+                      opacity: 0.8,
+                    }}>
+                      {getTrackLabel(session.track)}{session.location ? ` · ${session.location}` : ""}
+                    </div>
+
+                    {session.speakers.length > 0 && (
+                      <div style={{ fontSize: "15px", color: "#999", marginBottom: "8px" }}>
+                        {session.speakers.join(" · ")}
+                      </div>
+                    )}
+
+                    {session.tags && (
+                      <div style={{ display: "flex", gap: "4px", flexWrap: "wrap", marginBottom: "8px" }}>
+                        {session.tags.map(t => <TagPill key={t} tag={t} fontSize="12.5px" />)}
+                      </div>
+                    )}
+
+                    {session.note ? (
+                      <p style={{
+                        fontSize: "15px",
+                        color: "#7a7a8e",
+                        margin: 0,
+                        lineHeight: 1.5,
+                        fontStyle: "italic",
+                      }}>
+                        {session.note}
+                      </p>
+                    ) : null}
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        )}
+
+        {/* TRACKS TAB */}
+        {activeTab === "tracks" && (
+          <div>
+            <h2 style={{ fontSize: "18px", fontWeight: 600, margin: "8px 0 4px", color: "#e8e8ff" }}>
+              Your Priority Tracks
+            </h2>
+            <p style={{ fontSize: "13px", color: "#666", margin: "0 0 20px" }}>
+              Ranked by relevance to product design, UX/UI, AI, and brand development
+            </p>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+              {PRIORITY_TRACKS.map((track, i) => {
+                const trackColorKey =
+                  track.name === "Corporate Innovation Summit"
+                    ? "Corporate Innovation"
+                    : track.name;
+                const tc = TRACK_COLORS[trackColorKey] || TRACK_COLORS["Centre Stage"];
+                const priorityTrackScheduleHighlightBg =
+                  track.name === "Corporate Innovation Summit" ||
+                  track.name === "Growth Summit" ||
+                  track.name === "Broad Topics";
+                const priorityTrackCardBg = priorityTrackScheduleHighlightBg
+                  ? `linear-gradient(135deg, ${tc.bg}, #0a0a1299)`
+                  : `linear-gradient(135deg, ${tc.bg}, #0a0a12)`;
+                return (
+                  <div key={i} style={{
+                    background: priorityTrackCardBg,
+                    border: `1px solid ${tc.accent}33`,
+                    borderRadius: "14px",
+                    padding: "18px",
+                  }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
+                      <span style={{
+                        width: "28px",
+                        height: "28px",
+                        borderRadius: "8px",
+                        background: `${tc.accent}22`,
+                        border: `1px solid ${tc.accent}44`,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "13px",
+                        fontWeight: 700,
+                        color: tc.accent,
+                        fontFamily: "'Space Mono', monospace",
+                      }}>
+                        {i + 1}
+                      </span>
+                      <h3 style={{ fontSize: "16px", fontWeight: 600, margin: 0, color: tc.accent }}>
+                        {getTrackLabel(track.name)}
+                      </h3>
+                    </div>
+                    <p style={{ fontSize: "13px", color: "#bbb", margin: "0 0 12px", lineHeight: 1.5 }}>
+                      {track.why}
+                    </p>
+                    <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
+                      {track.companies.map(c => (
+                        <span key={c} style={{
+                          background: "#ffffff0a",
+                          border: "1px solid #ffffff15",
+                          padding: "3px 10px",
+                          borderRadius: "8px",
+                          fontSize: "11px",
+                          color: "#999",
+                        }}>
+                          {c}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* SPEAKERS TAB */}
+        {activeTab === "speakers" && (
+          <div>
+            <h2 style={{ fontSize: "18px", fontWeight: 600, margin: "8px 0 4px", color: "#e8e8ff" }}>
+              Session Speakers
+            </h2>
+
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "14px",
+                marginBottom: "20px",
+              }}
+            >
+              {SPEAKER_PAGE_IMAGES.map((speaker, index) => (
+                <div
+                  key={speaker.src}
+                  style={{
+                    width: "108px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    textAlign: "center",
+                    gap: "8px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "88px",
+                      height: "88px",
+                      borderRadius: "50%",
+                      padding: "3px",
+                      background: "linear-gradient(135deg, #7c6fff66, #c77dff55)",
+                      boxShadow: "0 0 0 1px #ffffff10",
+                      flexShrink: 0,
+                    }}
+                  >
+                    <img
+                      src={speaker.src}
+                      alt={`${speaker.name} portrait`}
+                      style={{
+                        display: "block",
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: "50%",
+                        objectFit: "cover",
+                        background: "#151520",
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: "12px", fontWeight: 600, color: "#e8e8ff", lineHeight: 1.35 }}>
+                      {speaker.name}
+                    </div>
+                    <div style={{ fontSize: "11px", color: "#888", marginTop: "2px", lineHeight: 1.35 }}>
+                      {speaker.title}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              {ALL_SESSION_SPEAKERS.map((speaker) => (
+                <div key={speaker.name} style={{
+                  background: "#ffffff06",
+                  border: "1px solid #ffffff0a",
+                  borderRadius: "12px",
+                  padding: "14px 16px",
+                  display: "flex",
+                  gap: "14px",
+                  alignItems: "center",
+                }}>
+                  <div style={{
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "10px",
+                    background: "linear-gradient(135deg, #7c6fff22, #c77dff22)",
+                    border: "1px solid #7c6fff33",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "14px",
+                    flexShrink: 0,
+                  }}>
+                    {speaker.name.charAt(0)}
+                  </div>
+                  <div>
+                    <div style={{ fontSize: "14px", fontWeight: 600, color: "#e8e8ff" }}>
+                      {speaker.name}
+                    </div>
+                    <div style={{ fontSize: "12px", color: "#888", marginTop: "2px" }}>
+                      {speaker.details || "Speaker details documented in session notes"}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {scheduleModal && (
+        <SessionModal
+          session={scheduleModal.session}
+          openedFromDayId={scheduleModal.dayId}
+          onClose={closeScheduleModal}
+        />
+      )}
+    </div>
+  );
+}
+
+
+const rootEl = document.getElementById("root");
+const root = ReactDOM.createRoot(rootEl);
+root.render(<WebSummitGuide />);
+  </script>
+</body>
+</html>
